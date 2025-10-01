@@ -18,11 +18,12 @@ format:
 
 ### Justification for choice of study
 
-Please describe why you chose to reproduce the results of this study.
+I choose a recent paper from my advisor. I will try to replicate experiment in the figure 6 (especially the figure 6C). Figure 6C is part of a study analyzing gaze behavior in freely moving marmosets wearing the CEREBRO head-mounted eye-tracking system. The experiment involves recording marmosets as they freely explore a large open arena (200 cm × 100 cm × 240 cm). During this exploration, the system simultaneously records. CERBRO in this paper is an effective device that can collect eye-tracking data in free-moving marmoset. In my project, I will also use CERBRO and record the data from free-moving systems and research questions of specific tasks.My research interest stands on natural visual behavior of the marmoset, so get to familiar with the eye-tracking data collected by this device is helpful for me to do research. 
 
 ### Anticipated challenges
 
-Do you anticipate running into any challenges when attempting to reproduce these result(s)? If so please, list them here.
+Firstly is to extract eye-tracking data, and detect eye behaviors,  use a gaze velocity threshold (e.g., ±200°/s) to classify epochs into:Gaze shifts: when gaze velocity exceeds the threshold. Gaze fixations: when gaze velocity is below the threshold. For each time point during the recorded session. Secondly, plot horizontal eye velocity (or position change) on the y-axis and head yaw velocity (or position change) on the x-axis, use a scatter plot to visualize the relationship, with distinct colors for each epoch.. Then, compute the correlation coefficient between eye and head movements separately for fixation and shift epochs.
+Challenge: I think the data may be raw data, so it is difficult to Organize and clean the data. And simulate the data also a challenge because the data is complex. The correct visualization of gaze trajectory is also a challenge. 
 
 ### Links
 
