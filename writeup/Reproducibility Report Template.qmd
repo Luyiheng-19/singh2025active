@@ -34,12 +34,20 @@ Original paper (as hosted in your repo): https://github.com/Luyiheng-19/singh202
 ## Methods
 
 ### Description of the steps required to reproduce the results
+(I reply all the feedback there)
 
-Please describe all the steps necessary to reproduce the key result(s) of this study. 
+The raw data(it is on https://datadryad.org/dataset/doi:10.5061/dryad.8gtht76xb) is avalible, but I can't access to the preprocess data and the code.So it takes time for me to preprocess them (e.g. I should calculate the eye horizontal velocity and head yaw velocity). Then I find the data is not smooth with some unreasonable values, such as head yaw velocity exceeding 2000deg/s. So I thought there must be a preporecess pipline to calculate the velocity, clean the nosie and define the gaze shifits. (if not, I should create one!)
+
+I will try to replicate the figure6C first. However, I can't get the same result if I can't get the code. One reason is that there are different methods to smooth the data dan clear the noise. The other is that there are so many time points(over 40,000), which are more than the paper represents. I think each point just represent a gaze shift or gaze fxiation event(thet choose one time point to represent and visualize the whole event). But,even though I can't get the original code, I can still simulate the similar result. Beacuse I can get the distribution of velocity. And I can classify them into two groups(gaze shift and fixation). I can calculate each distribution of them to simulate. 
+
+I will firstly ask the labmates in my lab for help. If I can get the same code or preprocess pipeline, it is perfect. But if not, it won't affect the simulation.
+
+After I get the figure 6C. I'm not very sure about how to analyze exactly beacuse it is not easy to estimate the workload. I can simulate the figure5 esily, it is the figure to describe the defference between head-fixed and free-moving eye position destribution. I can set it as the basic goal. Maybe simulate the whole figure6 is a challenge, I can't promise I'll finish all of them, but I can have a try. It describes the relations between head and eye when marmoset move freely.
+
 
 ### Differences from original study
 
-Explicitly describe known differences in the analysis pipeline between the original paper and yours (e.g., computing environment). The goal, of course, is to minimize those differences, but differences may occur. Also, note whether such differences are anticipated to influence your ability to reproduce the original results.
+The original research does not do stastitiscs, I can do t-test in velocity or position between two conditions(head fixed and free moving, the gaze fixation and shift). However, I don't know if it is needed for this research now.
 
 ## Project Progress Check 1
 
