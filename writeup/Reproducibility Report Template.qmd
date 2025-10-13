@@ -47,7 +47,7 @@ After I get the figure 6C. I'm not very sure about how to analyze exactly beacus
 
 ### Differences from original study
 
-The original research does not do stastitiscs, I can do t-test in velocity or position between two conditions(head fixed and free moving, the gaze fixation and shift). However, I don't know if it is needed for this research now.
+The original research does not do stastitiscs, I can do t-test in velocity or position between two conditions(head fixed and free moving, the gaze fixation and shift). However, I don't know if it is needed for this research now. Also, I will calculate their means and confidence interval.
 
 ## Project Progress Check 1
 
