@@ -46,16 +46,15 @@ The figure6 wants to quantify how freely moving marmosets coordinate their eye a
 
 Considering the results of figure6. There are restrictions of negative relations between the two velocities, and the velocity thereshold limit,and two head event(stable/turn),we should build models to simulate these patterns,the whole step lists:
 
-(1)	Simulate head with slow drift + large turns. 
-(2)	Compute head_vel = np.gradient(head)/dt.
+(1)	Simulate head velocity with slow drift + large turns. 
+(2)	Compute head_position 
 (3)	Simulate eye as baseline noise + saccades -gain * smoothed(head_vel) . (gain is the parameter to show the negaive relations between two velocities)
-(4)	compute eye_vel, gaze, gaze_vel.
+(4)	compute eye_position, gaze, gaze_velocity.
 (5)	cut peak velocities if it is not reasonable(>1000deg/s)
-(6)	Detect gaze shifts using |gaze_vel| > 200°/s and create event table (amplitude, peak velocity, latency, duration).
-(7)	Reproduce figure B–H with plot.
-(8) try to do statistics in head velocity and eye velocity in different event
+(6)	Detect gaze shifts using |gaze_vel| > 200°/s and create event table (amplitude, peak velocity, latency, duration).Plot the figure C
+(7)	Based on the basic experiment, generate the velocities in each event(when gaze shift, there are head turns and extra saccade),reproduce figure B–H with plot.
+(8) try to do statistics in head velocity and eye velocity in different event.
 
-It is hard to totally finish all the steps, but I can try to finish some. For (7), if it is to difficult to get, I will try to generate data for each event. (not use such complex equations)
 
 
 ### Differences from original study
