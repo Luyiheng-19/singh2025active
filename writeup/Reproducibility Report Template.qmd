@@ -40,7 +40,24 @@ The preprocessed data(it is on https://datadryad.org/dataset/doi:10.5061/dryad.8
 
 I can simulate the eye-position, eye velocity and head velocity between two conditions(head fixed and free moving for position, the gaze fixation and shift for velocity) based on their destributions. It looks like they are all gaussian distribution, so I will generate data which has the same distribution of the real data. But I also need an additional restriction between head velocity and eye velocity beacused they negatively correlated in gaze shift condition.
 
-After I solve this, I can get the similar figure as figure 6C, not exactly the same because it is ramdomly sampled. It shows negtive relations betwwen head yaw velocity and eye horizontal velocity in gaze shift.  After I get the figure 6C. I'm not very sure about how to analyze exactly beacuse it is not easy to estimate the workload. I can simulate the figure 5 easily, it is the figure to describe the defference between head-fixed and free-moving eye position destribution. I can set it as the basic goal. Maybe simulate the whole figure 6 is a challenge, I can't promise I'll finish all of them, but I can have a try. It describes the relations between head and eye when marmoset move freely. The original figure doesn't do statistics at all, so I can do it, see next part.
+After I solve this, I can get the similar figure as figure 6C, not exactly the same because it is ramdomly sampled. It shows negtive relations betwwen head yaw velocity and eye horizontal velocity in gaze shift.  After I get the figure 6C. I'm not very sure about how to analyze exactly beacuse it is not easy to estimate the workload. I can simulate the figure 5 easily, it is the figure to describe the defference between head-fixed and free-moving eye position destribution. I can set it as the basic goal. Maybe simulate the whole figure 6 is a challenge, I can't promise I'll finish all of them, but I can have a try. It describes the relations between head and eye when marmoset move freely. The original figure doesn't do statistics at all, so I can do it, see next part. 
+
+The paper wants to quantify how freely moving marmosets coordinate their eye and head movements while exploring their natural environment — in other words, how gaze is generated and controlled during real, active vision. So we should to follow.
+
+Considering the results of figure6. There are restrictions of negative relations between the two velocities, and the velocity thereshold limit,and two head event(stable turn),we should build models to simulate these patterns,the whole step lists:
+
+(1)	Simulate head with slow drift + large turns. 
+(2)	Compute head_vel = np.gradient(head)/dt.
+(3)	Simulate eye as baseline noise + saccades  -gain * smoothed(head_vel) . 
+(4)	compute eye_vel, gaze, gaze_vel.
+(5)	cut peak velocities if it is not reasonable(>1000deg/s)
+(6)	Detect gaze shifts using |gaze_vel| > 200°/s and create event table (amplitude, peak velocity, latency, duration).
+(7)	Reproduce figure B–H with plot.
+(8)	Tune gain, saccade amplitude/frequency, and smoothing until the fixation negative correlation in Fig.6C and the main sequence / saturation patterns in E–H look qualitatively right.
+(9) try to do statistics in head velocity and eye velocity in different event
+
+It is hard to totally finish all the steps, but I can try to finish some.
+
 
 ### Differences from original study
 
