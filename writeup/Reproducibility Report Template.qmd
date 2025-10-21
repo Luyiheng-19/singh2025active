@@ -48,15 +48,14 @@ Considering the results of figure6. There are restrictions of negative relations
 
 (1)	Simulate head with slow drift + large turns. 
 (2)	Compute head_vel = np.gradient(head)/dt.
-(3)	Simulate eye as baseline noise + saccades  -gain * smoothed(head_vel) . 
+(3)	Simulate eye as baseline noise + saccades -gain * smoothed(head_vel) . (gain is the parameter to show the negaive relations between two velocities)
 (4)	compute eye_vel, gaze, gaze_vel.
 (5)	cut peak velocities if it is not reasonable(>1000deg/s)
 (6)	Detect gaze shifts using |gaze_vel| > 200°/s and create event table (amplitude, peak velocity, latency, duration).
 (7)	Reproduce figure B–H with plot.
-(8)	Tune gain, saccade amplitude/frequency, and smoothing until the fixation negative correlation in Fig.6C and the main sequence / saturation patterns in E–H look qualitatively right.
-(9) try to do statistics in head velocity and eye velocity in different event
+(8) try to do statistics in head velocity and eye velocity in different event
 
-It is hard to totally finish all the steps, but I can try to finish some.
+It is hard to totally finish all the steps, but I can try to finish some. For (7), if it is to difficult to get, I will try to generate data for each event. (not use such complex equations)
 
 
 ### Differences from original study
