@@ -1,0 +1,193 @@
+---
+title: "Reproducibility Report for Study X by Sample & Sample (20xx, Psychological Science)"
+author: "Reproducibility Project Author[s] (contact information)"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+format:
+  html:
+    toc: true
+    toc_depth: 3
+---
+
+<!-- Reproducibility reports should all use this template to standardize reporting across projects. These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. -->
+
+## Introduction
+
+[No abstract is needed.]  Each reproducibility project will have a straightforward, no frills report of the study and reproducibility results. These reports will be publicly available as supplementary material for the aggregate report(s) of the project as a whole.  Also, to maximize project integrity, the intro and methods will be written and critiqued in advance of your attempt to reproduce the results. Introductions can be just 1-2 paragraphs clarifying the main idea of the original study, the target finding for your reproducibility attempt, and any other essential information.  It will NOT have a literature review -- that is in the original publication. You can write both the introduction and the methods in past tense.  
+
+**Clarify key analysis of interest here**  You can also pre-specify additional analyses you plan to do.
+
+### Justification for choice of study
+
+I choose a recent paper from my advisor. I will try to replicate experiment in the figure 6 (especially the figure 6C). Figure 6C is part of a study analyzing gaze behavior in freely moving marmosets wearing the CEREBRO head-mounted eye-tracking system. The experiment involves recording marmosets as they freely explore a large open arena (200 cm × 100 cm × 240 cm). The goal of the experiment is to test the relations of eye movement and head movement. During this exploration, the system simultaneously records. CERBRO in this paper is an effective device that can collect eye-tracking data in free-moving marmoset. In my project, I will also use CERBRO and record the data from free-moving systems and research questions of specific tasks (e.g. social interactions).My research interest stands on natural visual behavior of the marmoset, so get to familiar with the eye-tracking data collected by this device is helpful for me to do research. 
+
+### Anticipated challenges
+
+Firstly is to extract eye-tracking data, and detect eye behaviors,  use a gaze velocity threshold (e.g., ±200°/s) to classify epochs into Gaze shifts(when gaze velocity exceeds the threshold) and Gaze fixations (when gaze velocity is below the threshold). For each time point during the recorded session. Secondly, plot horizontal eye velocity (or position change) on the y-axis and head yaw velocity (or position change) on the x-axis, use a scatter plot to visualize the relationship, with distinct colors for each epoch.. Then, compute the correlation coefficient between eye and head movements separately for fixation and shift epochs.
+Challenge: I think the data may be raw data, so it is difficult to Organize and clean the data. And simulate the data also a challenge because the data is complex. The correct visualization of gaze trajectory is also a challenge. 
+
+### Links
+
+Project repository (on Github): https://github.com/Luyiheng-19/singh2025active/tree/main
+
+Original paper (as hosted in your repo): https://github.com/Luyiheng-19/singh2025active/blob/main/original_paper/2025_SinghEtAl.pdf
+
+## Methods
+
+### Description of the steps required to reproduce the results
+
+The preprocessed data(it is on https://datadryad.org/dataset/doi:10.5061/dryad.8gtht76xb) is avalible, but I can't access to totally processed data and the code.So it takes time for me to preprocess them (e.g. I should calculate the eye horizontal velocity and head yaw velocity, then detect the fixation). Then I find the data is not smooth with some unreasonable values, such as head yaw velocity exceeding 2000deg/s. And there are much more time points than the figure 6C presents. Then I ask my labmates, she tells me that the velocity is unusal beacuse of the function of the device. And she just randomly sample a period of the experiment.
+
+
+Considering the results of figure6. There are restrictions of negative relations between the two velocities, and the velocity thereshold limit,and two head event(stable/turn),we should build models to simulate these patterns,the whole step lists:
+
+(1)	Simulate head velocity with slow drift + large turns. 
+(2)	Compute head_position 
+(3)	Simulate eye as baseline noise + saccades -gain * smoothed(head_vel) . (gain is the parameter to show the negaive relations between two velocities)
+(4)	compute eye_position, gaze, gaze_velocity.
+(5)	cut peak velocities if it is not reasonable(>1000deg/s)
+(6)	Detect gaze shifts using |gaze_vel| > 200°/s and create event table (amplitude, peak velocity, latency, duration).Plot the figure C
+
+
+
+
+
+
+### Differences from original study
+
+The original research does not do stastitiscs, I can do t-test in velocity or position between two conditions(the gaze fixation and shift). However, I don't know if it is needed for this research now. Also, I will calculate their means and confidence interval, and the r correlation between head yaw velocity and eye horizontal velocity.
+
+### Details
+
+Clarify your confirmatory focus.Narrow your confirmatory analysis to a single, clearly defined target. Figure 6C shows the negative correlation between head yaw velocity and eye horizontal velocity during gaze shifts — that correlation (and its difference from fixation periods) should be your primary confirmatory analysis. 
+
+a. Comfirmatory Focus: The confirmatory analysis will test whether head yaw velocity and eye horizontal velocity are negatively correlated during fixation epochs, and eye and head move in the same direction during gaze-shift epochs. During head gaze shift epoch, Saccadic eye pulses have larger absolute velocities and tend to lead the head in time (eye peaks earlier)
+
+Q:Make the simulation plan more concrete.You’re on the right track with the generative model! For the next draft, specify:
+
+b1. How many timepoints or trials you’ll simulate per condition.
+
+each time points about 0.02s, I will simulate aproximately 10s in each condition.
+
+b2. The parameter values (means, SDs, correlations)
+
+We can't simulate eye-tracking data using normal distribution casue they are time-series data. There are two relations in the two conditions, so we should simulate separately.
+
+In fixation:
+
+Althouth in fixation, the head and eye still move slowly.
+
+Vhead(t) = A Sin(2pi * ft) + nosie
+Veye(t) = -r * Vhead(t) + nosie 
+
+each eye or head movement (a saccade or head turn) is represented as a half-sine velocity pulse because sin function is suitble for time series data, A sine wave starts and ends at zero velocity, peaking smoothly in the middle. This pattern likes real-world velocity. Using r to show negative correlation of Veye. Use noise, which is for simulate real world data. The nosie's distribution is N(0, std)
+
+Parameters: A: a reasonable number for fixation head peak velocity, values can caculated by the real data
+
+f: Frequency
+
+-r: regression slope r, represent the correlation
+
+noise: can estimate by the varience of data
+
+
+In gaze shift:
+
+in this condition, when the marmosets gaze shifts, it is obviously increase	the value of both velocities, so I give them a pulse, wich represnts the gaze shift.
+
+Vevent_head(t) = Apeak_head Sin(pi * (t-t0/Dhead)) (when the event happens, time:t0, t is only avalible from t0 to t0+ Dhead)
+
+Vevent_eye(t) = Apeak_eye Sin(pi * (t-t0/Deye)) (When the event happens , time:t0, t is only avalible from t0 to t0+ Deye)
+
+So the t is the real time, and when t goes t+D, the event finish. D is the duration of shift.
+
+So the real velcoty is 
+
+Vhead_real(t) = Vhead(t) + Vhead_event(t)
+Veye_real(t) = Veye(t) + Veye_event(t)
+
+
+Q:The parameter values (means, SDs, correlations) you’ll use for head and eye velocity distributions.
+
+b4. I need to calculate further, and even adjust them after seeing the result.
+
+Q:How you’ll impose the negative correlation (e.g., specifying covariance matrix or gain parameter).How you’ll define and detect events (|gaze velocity| > 200 °/s).
+
+b5.gaze velocity = head velocity + eye velocity
+
+Q:How you’ll evaluate whether the simulated data reproduce the key pattern (visual and quantitative).Frame it like a preregistration with precise parameter sources and decision rules.
+
+b6. Calculate the simulate correlation in different conditions.
+
+Q:Strengthen the reproducibility plan.It’s excellent that you found the Dryad dataset. Add a short list of what you’ll actually reproduce (e.g., re-plot Fig. 6C from the processed subset) and what’s unavailable (e.g., full processed trajectories).
+
+Clarify that your first goal is reproducing the original figure from raw/preprocessed data, before extending to simulations.Add an analysis section with clear statistical steps.Since the original figure was descriptive, define what your inferential addition will be — e.g., “Compute Pearson r between head yaw and eye horizontal velocity in each condition; test difference using Fisher’s r-to-z transformation.” This makes the analytic logic reproducible and testable.Clarify scope and feasibility.
+
+c. Now I only try to simulate the data based on figure 6C, beacause simulation it is a challeng, I can adjust parameter to see if it can get other figures
+
+I should calculate the regression slope between head yaw and eye horizontal velocity in fixation for my model parameter r.
+
+And I should caculate the mean and varience in each condition, which will help me to get parameter of A and Noise std
+
+The duration of the gaze shift event, and the mean velocity of eye and head
+
+### reliabilty and validity
+
+For the original study,We can calculate the reliability since the experiment lasts a long time. We can randomly sample serval 10s-20s parts of experiment, try to see if there have similar patterns. If tehre are significant negative relations. 
+
+For the simulation, we can calculate each parts' estimation and change the model parameter and try to simulate, to see if the simulation can replicate the patterns in this experiment.
+
+For validity, the exiperiment doesn't measure some varible, just directly test the velocity.
+
+
+
+
+
+## Project Progress Check 1
+
+### Measure of success
+
+Please describe the outcome measure for the success or failure of your reproduction and how this outcome will be computed.
+
+
+### Pipeline progress
+
+Earlier in this report, you described the steps necessary to reproduce the key result(s) of this study. Please describe your progress on each of these steps (e.g., data preprocessing, model fitting, model evaluation).
+
+
+## Results
+
+### Data preparation
+
+Data preparation following the analysis plan.
+	
+```{r include=F}
+### Data Preparation
+
+#### Load Relevant Libraries and Functions
+
+#### Import data
+
+#### Data exclusion / filtering
+
+#### Prepare data for analysis - create columns etc.
+```
+
+### Key analysis
+
+The analyses as specified in the analysis plan.  
+
+*Side-by-side graph with original graph is ideal here*
+
+### Exploratory analyses
+
+Any follow-up analyses desired (not required).  
+
+## Discussion
+
+### Summary of Reproduction Attempt
+
+Open the discussion section with a paragraph summarizing the primary result from the key analysis and assess whether you successfully reproduced it, partially reproduced it, or failed to reproduce it.  
+
+### Commentary
+
+Add open-ended commentary (if any) reflecting (a) insights from follow-up exploratory analysis of the dataset, (b) assessment of the meaning of the successful or unsuccessful reproducibility attempt - e.g., for a failure to reproduce the original findings, are the differences between original and present analyses ones that definitely, plausibly, or are unlikely to have been moderators of the result, and (c) discussion of any objections or challenges raised by the current and original authors about the reproducibility attempt (if you contacted them).  None of these need to be long.
