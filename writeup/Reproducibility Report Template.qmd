@@ -128,7 +128,7 @@ Clarify that your first goal is reproducing the original figure from raw/preproc
 
 c. Now I only try to simulate the data based on figure 6C, beacause simulation it is a challeng, I can adjust parameter to see if it can get other figures
 
-I should calculate the Pearson r between head yaw and eye horizontal velocity in each condition for my model parameter r.
+I should calculate the regression slope between head yaw and eye horizontal velocity in fixation for my model parameter r.
 
 And I should caculate the mean and varience in each condition, which will help me to get parameter of A and Noise std
 
