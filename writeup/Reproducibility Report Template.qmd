@@ -76,6 +76,8 @@ We can't simulate eye-tracking data using normal distribution casue they are tim
 
 In fixation:
 
+Althouth in fixation, the head and eye still move slowly.
+
 Vhead(t) = A Sin(2pi * ft) + nosie
 Veye(t) = -r * Vhead(t) + nosie 
 
@@ -92,7 +94,7 @@ noise: can estimate by the varience of data
 
 In gaze shift:
 
-in this condition, I want to give a event that when the marmosets gaze shifts, it is obviously increase	the value of both velocity, so give them a event, wich represnts the gaze shift.
+in this condition, when the marmosets gaze shifts, it is obviously increase	the value of both velocities, so I give them a pluse, wich represnts the gaze shift.
 
 Vevent_head(t) = Apeak_head Sin(pi * (t-t0/Dhead)) (when the event happens, time:t0, t is only avalible from t0 to t0+ Dhead)
 
