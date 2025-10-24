@@ -94,7 +94,7 @@ noise: can estimate by the varience of data
 
 In gaze shift:
 
-in this condition, when the marmosets gaze shifts, it is obviously increase	the value of both velocities, so I give them a pluse, wich represnts the gaze shift.
+in this condition, when the marmosets gaze shifts, it is obviously increase	the value of both velocities, so I give them a pulse, wich represnts the gaze shift.
 
 Vevent_head(t) = Apeak_head Sin(pi * (t-t0/Dhead)) (when the event happens, time:t0, t is only avalible from t0 to t0+ Dhead)
 
