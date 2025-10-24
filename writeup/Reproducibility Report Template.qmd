@@ -87,7 +87,7 @@ Parameters: A: a reasonable number for fixation head peak velocity, values can c
 
 f: Frequency
 
--r: correlation r
+-r: regression slope r, represent the correlation
 
 noise: can estimate by the varience of data
 
