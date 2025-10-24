@@ -38,11 +38,6 @@ Original paper (as hosted in your repo): https://github.com/Luyiheng-19/singh202
 
 The preprocessed data(it is on https://datadryad.org/dataset/doi:10.5061/dryad.8gtht76xb) is avalible, but I can't access to totally processed data and the code.So it takes time for me to preprocess them (e.g. I should calculate the eye horizontal velocity and head yaw velocity, then detect the fixation). Then I find the data is not smooth with some unreasonable values, such as head yaw velocity exceeding 2000deg/s. And there are much more time points than the figure 6C presents. Then I ask my labmates, she tells me that the velocity is unusal beacuse of the function of the device. And she just randomly sample a period of the experiment.
 
-I can simulate the eye-position, head position,eye velocity and head velocity between two conditions(the gaze fixation and shift for velocity) based on their destributions. It looks like they are all gaussian distribution, so I will generate data which has the same distribution of the real data. But I also need an additional restriction between head velocity and eye velocity beacused they negatively correlated in gaze shift condition.
-
-After I solve this, I can get the similar figure as figure 6C, not exactly the same because it is ramdomly sampled. It shows negtive relations betwwen head yaw velocity and eye horizontal velocity in gaze shift.  After I get the figure 6C. I'm not very sure about how to analyze exactly beacuse it is not easy to estimate the workload.  I can set simulate explain and do statistics, as the basic goal. Maybe simulate the whole figure 6 is a challenge, I can't promise I'll finish all of them, but I can have a try. It describes the relations between head and eye when marmoset move freely. The original figure doesn't do statistics at all, so I can do it, see next part. 
-
-The figure6 wants to quantify how freely moving marmosets coordinate their eye and head movements while exploring their natural environment — in other words, how gaze is generated and controlled during real, active vision. So we should to follow.
 
 Considering the results of figure6. There are restrictions of negative relations between the two velocities, and the velocity thereshold limit,and two head event(stable/turn),we should build models to simulate these patterns,the whole step lists:
 
@@ -57,9 +52,91 @@ Considering the results of figure6. There are restrictions of negative relations
 
 
 
+
+
 ### Differences from original study
 
-The original research does not do stastitiscs, I can do t-test in velocity or position between two conditions(head fixed and free moving, the gaze fixation and shift). However, I don't know if it is needed for this research now. Also, I will calculate their means and confidence interval, and the r correlation between head yaw velocity and eye horizontal velocity.
+The original research does not do stastitiscs, I can do t-test in velocity or position between two conditions(the gaze fixation and shift). However, I don't know if it is needed for this research now. Also, I will calculate their means and confidence interval, and the r correlation between head yaw velocity and eye horizontal velocity.
+
+### Details
+
+Clarify your confirmatory focus.Narrow your confirmatory analysis to a single, clearly defined target. Figure 6C shows the negative correlation between head yaw velocity and eye horizontal velocity during gaze shifts — that correlation (and its difference from fixation periods) should be your primary confirmatory analysis. 
+
+a. Comfirmatory Focus: The confirmatory analysis will test whether head yaw velocity and eye horizontal velocity are negatively correlated during fixation epochs, and eye and head move in the same direction during gaze-shift epochs. During head gaze shift epoch, Saccadic eye pulses have larger absolute velocities and tend to lead the head in time (eye peaks earlier)
+
+Make the simulation plan more concrete.You’re on the right track with the generative model! For the next draft, specify:
+
+b1. How many timepoints or trials you’ll simulate per condition.
+
+each time points about 0.02s, I will simulate aproximately 10s in each condition.
+
+b2. The parameter values (means, SDs, correlations)
+
+We can't simulate eye-tracking data using normal distribution casue they are time-series data. There are two relations in the two conditions, so we should simulate separately.
+
+In fixation:
+
+Vhead(t) = A Sin(2pi * ft) + nosie
+Veye(t) = -r * Vhead(t) + nosie 
+
+each eye or head movement (a saccade or head turn) is represented as a half-sine velocity pulse because sin function is suitble for time series data, A sine wave starts and ends at zero velocity, peaking smoothly in the middle. This pattern likes real-world velocity. Using r to show negative correlation of Veye. Use noise, which is for simulate real world data. The nosie's distribution is N(0, std)
+
+Parameters: A: a reasonable number for fixation head peak velocity, values can caculated by the real data
+
+f: Frequency
+
+-r: correlation r
+
+noise: can estimate by the varience of data
+
+
+In gaze shift:
+
+in this condition, I want to give a event that when the marmosets gaze shifts, it is obviously increase	the value of both velocity, so give them a event, wich represnts the gaze shift.
+
+Vevent_head(t) = Apeak_head Sin(pi * (t-t0/Dhead)) (when the event happens, time:t0, t is only avalible from t0 to t0+ Dhead)
+
+Vevent_eye(t) = Apeak_eye Sin(pi * (t-t0/Deye)) (When the event happens , time:t0, t is only avalible from t0 to t0+ Deye)
+
+So the t is the real time, and when t goes t+D, the event finish. D is the duration of shift.
+
+So the real velcoty is 
+
+Vhead_real(t) = Vhead(t) + Vhead_event(t)
+Veye_real(t) = Veye(t) + Veye_event(t)
+
+
+The parameter values (means, SDs, correlations) you’ll use for head and eye velocity distributions.
+
+b4. I need to calculate further, and even adjust them after seeing the result
+
+How you’ll impose the negative correlation (e.g., specifying covariance matrix or gain parameter).How you’ll define and detect events (|gaze velocity| > 200 °/s).
+
+b3.gaze velocity = head velocity + eye velocity
+
+How you’ll evaluate whether the simulated data reproduce the key pattern (visual and quantitative).Frame it like a preregistration with precise parameter sources and decision rules.
+
+b3.
+
+Calculate the simulate correlation in different conditions.
+
+Strengthen the reproducibility plan.It’s excellent that you found the Dryad dataset. Add a short list of what you’ll actually reproduce (e.g., re-plot Fig. 6C from the processed subset) and what’s unavailable (e.g., full processed trajectories).
+
+Clarify that your first goal is reproducing the original figure from raw/preprocessed data, before extending to simulations.Add an analysis section with clear statistical steps.Since the original figure was descriptive, define what your inferential addition will be — e.g., “Compute Pearson r between head yaw and eye horizontal velocity in each condition; test difference using Fisher’s r-to-z transformation.” This makes the analytic logic reproducible and testable.Clarify scope and feasibility.
+
+c. Now I only try to simulate the data based on figure 6C, beacause simulation it is a challeng, I can adjust parameter to see if it can get other figures
+
+I should calculate the Pearson r between head yaw and eye horizontal velocity in each condition for my model parameter r.
+
+And I should caculate the mean and varience in each condition, which will help me to get parameter of A and Noise std
+
+The duration of the gaze shift event, and the mean velocity of eye and head
+
+
+
+
+
+
 
 ## Project Progress Check 1
 
