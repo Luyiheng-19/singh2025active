@@ -34,7 +34,6 @@ Original paper (as hosted in your repo): https://github.com/Luyiheng-19/singh202
 ## Methods
 
 ### Description of the steps required to reproduce the results
-(I reply all the feedback there)
 
 The preprocessed data(it is on https://datadryad.org/dataset/doi:10.5061/dryad.8gtht76xb) is avalible, but I can't access to totally processed data and the code.So it takes time for me to preprocess them (e.g. I should calculate the eye horizontal velocity and head yaw velocity, then detect the fixation). Then I find the data is not smooth with some unreasonable values, such as head yaw velocity exceeding 2000deg/s. And there are much more time points than the figure 6C presents. Then I ask my labmates, she tells me that the velocity is unusal beacuse of the function of the device. And she just randomly sample a period of the experiment.
 
@@ -64,7 +63,7 @@ Clarify your confirmatory focus.Narrow your confirmatory analysis to a single, c
 
 a. Comfirmatory Focus: The confirmatory analysis will test whether head yaw velocity and eye horizontal velocity are negatively correlated during fixation epochs, and eye and head move in the same direction during gaze-shift epochs. During head gaze shift epoch, Saccadic eye pulses have larger absolute velocities and tend to lead the head in time (eye peaks earlier)
 
-Make the simulation plan more concrete.You’re on the right track with the generative model! For the next draft, specify:
+Q:Make the simulation plan more concrete.You’re on the right track with the generative model! For the next draft, specify:
 
 b1. How many timepoints or trials you’ll simulate per condition.
 
@@ -108,21 +107,19 @@ Vhead_real(t) = Vhead(t) + Vhead_event(t)
 Veye_real(t) = Veye(t) + Veye_event(t)
 
 
-The parameter values (means, SDs, correlations) you’ll use for head and eye velocity distributions.
+Q:The parameter values (means, SDs, correlations) you’ll use for head and eye velocity distributions.
 
-b4. I need to calculate further, and even adjust them after seeing the result
+b4. I need to calculate further, and even adjust them after seeing the result.
 
-How you’ll impose the negative correlation (e.g., specifying covariance matrix or gain parameter).How you’ll define and detect events (|gaze velocity| > 200 °/s).
+Q:How you’ll impose the negative correlation (e.g., specifying covariance matrix or gain parameter).How you’ll define and detect events (|gaze velocity| > 200 °/s).
 
-b3.gaze velocity = head velocity + eye velocity
+b5.gaze velocity = head velocity + eye velocity
 
-How you’ll evaluate whether the simulated data reproduce the key pattern (visual and quantitative).Frame it like a preregistration with precise parameter sources and decision rules.
+Q:How you’ll evaluate whether the simulated data reproduce the key pattern (visual and quantitative).Frame it like a preregistration with precise parameter sources and decision rules.
 
-b3.
+b6. Calculate the simulate correlation in different conditions.
 
-Calculate the simulate correlation in different conditions.
-
-Strengthen the reproducibility plan.It’s excellent that you found the Dryad dataset. Add a short list of what you’ll actually reproduce (e.g., re-plot Fig. 6C from the processed subset) and what’s unavailable (e.g., full processed trajectories).
+Q:Strengthen the reproducibility plan.It’s excellent that you found the Dryad dataset. Add a short list of what you’ll actually reproduce (e.g., re-plot Fig. 6C from the processed subset) and what’s unavailable (e.g., full processed trajectories).
 
 Clarify that your first goal is reproducing the original figure from raw/preprocessed data, before extending to simulations.Add an analysis section with clear statistical steps.Since the original figure was descriptive, define what your inferential addition will be — e.g., “Compute Pearson r between head yaw and eye horizontal velocity in each condition; test difference using Fisher’s r-to-z transformation.” This makes the analytic logic reproducible and testable.Clarify scope and feasibility.
 
@@ -134,7 +131,13 @@ And I should caculate the mean and varience in each condition, which will help m
 
 The duration of the gaze shift event, and the mean velocity of eye and head
 
+### reliabilty and validity
 
+For the original study,We can calculate the reliability since the experiment lasts a long time. We can randomly sample serval 10s-20s parts of experiment, try to see if there have similar patterns. If tehre are significant negative relations. 
+
+For the simulation, we can calculate each parts' estimation and change the model parameter and try to simulate, to see if the simulation can replicate the patterns in this experiment.
+
+For validity, the exiperiment doesn't measure some varible, just directly test the velocity.
 
 
 
