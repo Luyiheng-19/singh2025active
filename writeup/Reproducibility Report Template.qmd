@@ -46,8 +46,7 @@ Considering the results of figure6. There are restrictions of negative relations
 (4)	compute eye_position, gaze, gaze_velocity.
 (5)	cut peak velocities if it is not reasonable(>1000deg/s)
 (6)	Detect gaze shifts using |gaze_vel| > 200°/s and create event table (amplitude, peak velocity, latency, duration).Plot the figure C
-(7)	Based on the basic experiment, generate the velocities in each event(when gaze shift, there are head turns and extra saccade),reproduce figure B–H with plot.
-(8) try to do statistics in head velocity and eye velocity in different event.
+
 
 
 
