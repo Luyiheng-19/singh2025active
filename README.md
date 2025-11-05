@@ -10,4 +10,5 @@ Firstly, OPEN VScode
 
 4. then create a terminal, run pixi install -e default
 
-5. and jupyter will show up, you can run untitled1 now.
+5. and jupyter will show up, you can run untitled1 now.(if not show up, then run pixi run start
+)
