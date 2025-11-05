@@ -140,9 +140,28 @@ For validity, the exiperiment doesn't measure some varible, just directly test t
 
 
 
-
-
 ## Project Progress Check 1
+
+The outcome measure for the success or failure of your reproduction and how this outcome will be computed. There data should have this points:
+
+1. show negative relation when fixation, without high positive correlation in gaze shift, as figure 6C
+2. should have two gaze shift events, as Figure6 D below
+3. The first one is eye velocity changes, and head velocity does not change
+4. The second is that both of two velocities change
+5. the duration and some traits in event is similar as figure 6D below
+
+
+
+As part of the Project Report assignment, you described the steps necessary to reproduce the key result(s) of this study. Please describe your progress on each of these steps (e.g., data preprocessing, model fitting, model evaluation).
+
+1. smooth: smooth the data (finished)
+2. correlation r calculate in each events (finished)
+3. event detection (finished)
+4. visualization (part of )
+5. decribe data(mean, var, duartion) (part of)
+6. make some test(not do yet)
+
+
 
 ### Measure of success
 
