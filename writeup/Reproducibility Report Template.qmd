@@ -142,6 +142,15 @@ For validity, the exiperiment doesn't measure some varible, just directly test t
 
 ## Project Progress Check 1
 
+
+
+
+
+
+
+
+### Measure of success
+
 The outcome measure for the success or failure of your reproduction and how this outcome will be computed. There data should have this points:
 
 1. show negative relation when fixation, without high positive correlation in gaze shift, as figure 6C
@@ -150,6 +159,8 @@ The outcome measure for the success or failure of your reproduction and how this
 4. The second is that both of two velocities change
 5. the duration and some traits in event is similar as figure 6D below
 
+
+### Pipeline progress
 
 
 As part of the Project Report assignment, you described the steps necessary to reproduce the key result(s) of this study. Please describe your progress on each of these steps (e.g., data preprocessing, model fitting, model evaluation).
@@ -160,17 +171,6 @@ As part of the Project Report assignment, you described the steps necessary to r
 4. visualization (part of )
 5. decribe data(mean, var, duartion) (part of)
 6. make some test(not do yet)
-
-
-
-### Measure of success
-
-Please describe the outcome measure for the success or failure of your reproduction and how this outcome will be computed.
-
-
-### Pipeline progress
-
-Earlier in this report, you described the steps necessary to reproduce the key result(s) of this study. Please describe your progress on each of these steps (e.g., data preprocessing, model fitting, model evaluation).
 
 
 ## Results
